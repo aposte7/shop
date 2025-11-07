@@ -63,7 +63,7 @@ export default async function Page({ params }: Props) {
 							<div className="inline-flex items-center gap-2">
 								<Star
 									className="text-yellow-400 "
-									size={18}
+									size={20}
 									fill="currentColor"
 								/>
 								<span className="text font-medium">4.5</span>
@@ -83,6 +83,74 @@ export default async function Page({ params }: Props) {
 							<ShoppingCart className="text-4xl" />{' '}
 							<span className="text-base">Add To Cart</span>
 						</Button>
+					</div>
+				</div>
+			</section>
+
+			<section className="py-20">
+				<div className="p-6 rounded-xl min-h-50 border border-secondary">
+					<h2 className="text-xl font-semibold">Review (2)</h2>
+
+					<div className="mt-5">
+						<div className="flex items-center gap-4">
+							<img
+								alt="product placeholder"
+								src="https://via.placeholder.com/400x500?text=Product+Image"
+								width={400}
+								height={500}
+								className="w-12 h-12 rounded-full  border-2 border-accent object-cover"
+							/>
+
+							<div className="flex flex-1 justify-between">
+								<div className="flex gap-4">
+									<div>
+										<p className="text-sm font-medium">
+											Hiikaa Gemechuu
+										</p>
+
+										<p className="text-xs text-slate-400">
+											hiika@gmail.com
+										</p>
+									</div>
+
+									<div className="flex gap-0.5 items-center mt-1 h-fit">
+										<Star
+											className="text-yellow-400 "
+											size={15}
+											fill="currentColor"
+										/>
+										<Star
+											className="text-yellow-400 "
+											size={15}
+											fill="currentColor"
+										/>
+										<Star
+											className="text-yellow-400 "
+											size={15}
+											fill="currentColor"
+										/>
+										<Star
+											className="text-yellow-400 "
+											size={15}
+											fill="currentColor"
+										/>
+										<Star
+											className="text-yellow-400 "
+											size={15}
+											fill="currentColor"
+										/>
+									</div>
+								</div>
+
+								<div className="text-sm text-slate-400">
+									1 moth ago
+								</div>
+							</div>
+						</div>
+
+						<p className="py-2">
+							This product is good I got it like I ecpected
+						</p>
 					</div>
 				</div>
 			</section>
