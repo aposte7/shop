@@ -31,18 +31,18 @@ npm run dev
 
 Favorites are stored in `localStorage` and managed by a Redux slice in `src/features/favorities/favoritiesSlice.ts`. The client UI and hooks live under `src/features/favorites` and are mounted inside the server page at `/favorites`.
 
-![Favorites grid](/screenshots/favorites-grid.png)
+![Favorites grid](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/favorites-grid.png)
 
 ## Product detail
 
 Product detail logic (RTK Query calls, local state for images, add-to-cart behavior) is implemented in a client component `src/features/products/components/ProductDetail.tsx`. The route page (`src/app/(site)/product/[productId]/page.tsx`) is a thin server component that simply renders the client component.
 
-![Product detail](/screenshots/product-detail.png)
+![Product detail](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/product-detail.png)
 
-![Reviews](/screenshots/reviews.png)
+![Reviews](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/reviews.png)
 
 ## Products list
 
 The main product listing (infinite scroll) is implemented under `src/features/products`.
 
-![Products grid](/screenshots/products-grid.png)
+![Products grid](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/products-grid.png)
