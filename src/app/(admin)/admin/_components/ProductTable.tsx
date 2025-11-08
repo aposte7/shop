@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Edit, Trash2, MoreHorizontal } from 'lucide-react';
+import { Edit, MoreHorizontal } from 'lucide-react';
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -20,12 +20,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
 import { useGetProductsQuery } from '@/features/products/productsApi';
+import DeleteButton from './DeleteProduct';
 
 export default function ProductTable() {
 	const router = useRouter();
-	const { data } = useGetProductsQuery(
+	const { data, refetch } = useGetProductsQuery(
 		{ limit: 100, skip: 0 },
 		{ refetchOnMountOrArgChange: true }
 	);
@@ -160,16 +160,16 @@ export default function ProductTable() {
 													Edit
 												</DropdownMenuItem>
 												<DropdownMenuSeparator />
-												<DropdownMenuItem
-													onSelect={() =>
-														toast.error(
-															`Deleted ${product.title}`
-														)
-													}
-													data-variant="destructive"
-												>
-													<Trash2 className="w-4 h-4 mr-2" />
-													Delete
+												<DropdownMenuItem data-variant="destructive">
+													<DeleteButton
+														productId={product.id}
+														productTitle={
+															product.title
+														}
+														onSuccess={() => {
+															refetch();
+														}}
+													/>
 												</DropdownMenuItem>
 											</DropdownMenuContent>
 										</DropdownMenu>
