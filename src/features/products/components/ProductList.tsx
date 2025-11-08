@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useGetProductsQuery } from '../productsSlice';
 import ProductCard from './ProductCard';
 import ProductSpinner from './ProductSpinner';
@@ -17,13 +17,34 @@ import { toast } from 'sonner';
 const PAGE_SIZE = 10;
 
 export default function ProductList() {
-	const [skip] = useState(0);
+	const [skip, setSkip] = useState(0);
 
 	const { data, isLoading, isFetching, isError, refetch } =
 		useGetProductsQuery({
 			limit: PAGE_SIZE,
 			skip,
 		});
+
+	const observer = useRef<IntersectionObserver | null>(null);
+	const lastElRef = useRef<HTMLDivElement>(null);
+
+	const hasMore = data && skip + PAGE_SIZE < data.total;
+
+	useEffect(() => {
+		if (!hasMore || isFetching) return;
+
+		if (observer.current) observer.current.disconnect();
+
+		observer.current = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting) {
+				setSkip((prev) => prev + PAGE_SIZE);
+			}
+		});
+
+		if (lastElRef.current) observer.current.observe(lastElRef.current);
+
+		return () => observer.current?.disconnect();
+	}, [hasMore, isFetching]);
 
 	if (isError)
 		return (
@@ -84,15 +105,23 @@ export default function ProductList() {
 			{isLoading && <ProductSpinner />}
 
 			{products && (
-				<div className="justify-between gap-6 grid grid-cols-[repeat(auto-fit,minmax(270px,1fr))]">
-					{products.map((product) => (
-						<ProductCard key={product.id} product={product} />
-					))}
+				<div>
+					<div className="justify-between gap-6 grid grid-cols-[repeat(auto-fit,minmax(270px,1fr))]">
+						{products.map((product, idx) => (
+							<ProductCard
+								key={product.id}
+								product={product}
+								isLast={idx === products.length - 1}
+								lastElRef={lastElRef}
+							/>
+						))}
+					</div>
+					{isFetching && !isLoading && (
+						<div className="text-center py-6 text-gray-600">
+							<ProductSpinner />
+						</div>
+					)}
 				</div>
-			)}
-
-			{isFetching && (
-				<p className="text-center py-6 text-gray-600">Loading more…</p>
 			)}
 		</section>
 	);
