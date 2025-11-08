@@ -119,9 +119,6 @@ export default function ProductTable() {
 										<span className="font-medium">
 											{product.rating}
 										</span>
-										<span className="text-yellow-500">
-											star
-										</span>
 									</div>
 								</TableCell>
 								<TableCell className="text-center">
