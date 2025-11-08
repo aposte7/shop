@@ -14,7 +14,7 @@ import { Bell, Menu } from 'lucide-react';
 
 export function Header() {
 	return (
-		<header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+		<header className="bg-white py-1 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
 			<div className="flex items-center justify-between px-4 py-3">
 				<div className="border-b border-gray-200 bg-white xl:hidden">
 					<div className="container-responsive flex items-center gap-3 py-3">

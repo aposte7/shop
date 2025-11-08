@@ -37,7 +37,7 @@ export default function Sidebar() {
 			<aside
 				className={cn(
 					'hidden xl:flex xl:flex-col xl:fixed xl:inset-y-0 bg-white border-r border-slate-200 transition-all duration-300',
-					isCollapsed ? 'w-20' : 'w-64'
+					isCollapsed ? 'w-23' : 'w-64'
 				)}
 			>
 				<div className="flex items-center justify-between p-4 border-b border-slate-200">
