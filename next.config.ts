@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
 				hostname: 'cdn.dummyjson.com',
 				pathname: '**',
 			},
+			{
+				protocol: 'https',
+				hostname: 'ui-avatars.com',
+				pathname: '/api/**',
+			},
 		],
 	},
 };
