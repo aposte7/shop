@@ -19,10 +19,12 @@ import {
 	DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useGetProductsQuery } from '@/features/products/productsApi';
 
 export default function ProductTable() {
+	const router = useRouter();
 	const { data } = useGetProductsQuery(
 		{ limit: 100, skip: 0 },
 		{ refetchOnMountOrArgChange: true }
@@ -149,8 +151,8 @@ export default function ProductTable() {
 											<DropdownMenuContent align="end">
 												<DropdownMenuItem
 													onSelect={() =>
-														toast.info(
-															`Edit ${product.title}`
+														router.push(
+															`/admin/products/edit/${product.id}`
 														)
 													}
 												>

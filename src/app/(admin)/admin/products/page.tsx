@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Edit, Package } from 'lucide-react';
+import { Edit, Link } from 'lucide-react';
 import ProductTable from '../_components/ProductTable';
 
 export default function AdminProductsPage() {
@@ -11,8 +11,10 @@ export default function AdminProductsPage() {
 					Products Management
 				</h1>
 				<Button>
-					<Edit className="w-4 h-4 mr-2" />
-					Add New Product
+					<Link href="/product/add" className="flex items-center">
+						<Edit className="w-4 h-4 mr-2" />
+						Add New Product
+					</Link>
 				</Button>
 			</div>
 
