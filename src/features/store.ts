@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { productsApi } from './products/productsSlice';
+import { productsApi } from './products/productsApi';
 import favoritesReducer from './favorites/favoritesSlice';
 
 export const store = configureStore({

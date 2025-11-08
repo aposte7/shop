@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useGetProductsQuery } from '../productsSlice';
+import { useGetProductsQuery } from '../productsApi';
 import ProductCard from './ProductCard';
 import ProductSpinner from './ProductSpinner';
 import {

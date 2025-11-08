@@ -9,7 +9,7 @@ import Stars from '@/components/Stars';
 import Image from 'next/image';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { toast } from 'sonner';
-import { useGetProductByIdQuery } from '@/features/products/productsSlice';
+import { useGetProductByIdQuery } from '@/features/products/productsApi';
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter } from 'next/navigation';
@@ -46,7 +46,6 @@ export default function ProductDetail({ productId }: Props) {
 
 	return (
 		<div className="max-w-7xl mx-auto p-4 md:p-8">
-			{/* Back Button */}
 			<Button
 				onClick={() => router.back()}
 				variant="outline"
@@ -113,7 +112,6 @@ export default function ProductDetail({ productId }: Props) {
 							</div>
 						</div>
 
-						{/* Price */}
 						<div className="flex items-center gap-3">
 							{discountPrice ? (
 								<>
@@ -165,7 +163,6 @@ export default function ProductDetail({ productId }: Props) {
 							{product.description}
 						</p>
 
-						{/* Add to Cart */}
 						<Button
 							onClick={handleAddToCart}
 							disabled={product.stock === 0}
@@ -182,7 +179,6 @@ export default function ProductDetail({ productId }: Props) {
 				</div>
 			</section>
 
-			{/* Reviews Section */}
 			<section className="py-20">
 				<Card className="p-6 rounded-xl border border-secondary">
 					<h2 className="text-xl font-semibold">

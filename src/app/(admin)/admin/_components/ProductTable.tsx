@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Image from 'next/image';
 import { toast } from 'sonner';
-import { useGetProductsQuery } from '@/features/products/productsSlice';
+import { useGetProductsQuery } from '@/features/products/productsApi';
 
 export default function ProductTable() {
 	const { data } = useGetProductsQuery(
