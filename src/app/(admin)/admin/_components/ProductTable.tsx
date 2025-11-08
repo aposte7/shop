@@ -152,7 +152,7 @@ export default function ProductTable() {
 												<DropdownMenuItem
 													onSelect={() =>
 														router.push(
-															`/admin/products/edit/${product.id}`
+															`/admin/product/edit/${product.id}`
 														)
 													}
 												>
