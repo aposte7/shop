@@ -1,15 +1,15 @@
-// components/ProductCard.tsx
 import { Button } from '@/components/ui/button';
 import { Card, CardFooter, CardTitle } from '@/components/ui/card';
 import { Heart, ShoppingCart } from 'lucide-react';
 import Stars from '@/components/Stars';
 import Image from 'next/image';
 import { Product } from '../types';
-import { RefObject, useState } from 'react';
+import { RefObject } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils'; // Optional: shadcn utils
+import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { useFavorites } from '@/features/favorites/hooks/usefavorites';
 
 interface ProductCardProps {
 	product: Product;
@@ -18,7 +18,8 @@ interface ProductCardProps {
 }
 
 function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
-	const [isWishlisted, setIsWishlisted] = useState(false);
+	const { isFavorite, toggle } = useFavorites();
+	const isWishlisted = isFavorite(product.id);
 
 	const hasDiscount = product.discountPercentage > 0;
 	const discountedPrice = hasDiscount
@@ -27,11 +28,28 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 		  )
 		: null;
 
+	const handleWishlistClick = (e: React.MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
+		toggle(product);
+		toast.success(
+			isWishlisted
+				? `"${product.title}" removed from favorites`
+				: `"${product.title}" added to favorites`
+		);
+	};
+
+	const handleAddToCart = (e: React.MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
+		toast.success(`"${product.title}" added to cart!`);
+	};
+
 	return (
 		<div className="block group" ref={isLast ? lastElRef : undefined}>
 			<Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-accent/20">
 				<Link
-					href={`/products/${product.id}`}
+					href={`/product/${product.id}`}
 					className="block no-underline"
 				>
 					<div className="relative">
@@ -40,9 +58,8 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 							alt={product.title}
 							width={400}
 							height={240}
-							className="w-full h-45 object-cover transition-transform duration-300 group-hover:scale-105"
+							className="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105"
 							priority
-							unoptimized={false}
 						/>
 
 						{hasDiscount && (
@@ -54,7 +71,7 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 							</Badge>
 						)}
 
-						{product.stock >= 0 && (
+						{product.stock === 0 && (
 							<Badge
 								variant="secondary"
 								className="absolute top-3 right-3 text-xs bg-red-100 text-red-700"
@@ -74,11 +91,7 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 						</CardTitle>
 
 						<div className="flex items-center gap-1">
-							<Stars
-								rating={product.rating}
-								size={16}
-								className="transition-colors"
-							/>
+							<Stars rating={product.rating} size={16} />
 							<span className="text-xs font-medium text-gray-600 ml-1">
 								({product.rating})
 							</span>
@@ -99,6 +112,7 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 									${product.price.toFixed(2)}
 								</span>
 							)}
+
 							{product.stock > 0 && product.stock <= 10 && (
 								<p className="text-xs text-orange-600 font-medium">
 									Only {product.stock} left!
@@ -112,14 +126,7 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 					<Button
 						className="flex-1 h-10"
 						disabled={product.stock === 0}
-						onClick={(e) => {
-							e.preventDefault();
-							e.stopPropagation();
-
-							toast.success(
-								`Product Successful added to your cart`
-							);
-						}}
+						onClick={handleAddToCart}
 					>
 						<ShoppingCart className="w-4 h-4 mr-1" />
 						Add To Cart
@@ -132,11 +139,7 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 							'h-10 w-10 transition-all',
 							isWishlisted && 'text-red-500 border-red-500'
 						)}
-						onClick={(e) => {
-							e.preventDefault();
-							e.stopPropagation();
-							setIsWishlisted(!isWishlisted);
-						}}
+						onClick={handleWishlistClick}
 					>
 						<Heart
 							className={cn(
