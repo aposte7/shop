@@ -47,7 +47,7 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 
 	return (
 		<div className="block group" ref={isLast ? lastElRef : undefined}>
-			<Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-accent/20">
+			<Card className="overflow-hidden pt-0 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-accent/20">
 				<Link
 					href={`/product/${product.id}`}
 					className="block no-underline"
@@ -58,7 +58,7 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 							alt={product.title}
 							width={400}
 							height={240}
-							className="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105"
+							className="w-full h-45 object-cover transition-transform duration-300 group-hover:scale-105"
 							priority
 						/>
 
@@ -71,7 +71,7 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 							</Badge>
 						)}
 
-						{product.stock === 0 && (
+						{product.stock <= 0 && (
 							<Badge
 								variant="secondary"
 								className="absolute top-3 right-3 text-xs bg-red-100 text-red-700"
@@ -86,7 +86,7 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 							{product.category}
 						</div>
 
-						<CardTitle className="line-clamp-2 text-base font-semibold group-hover:text-cyan-600 transition-colors">
+						<CardTitle className="line-clamp-1 text-base font-semibold group-hover:text-cyan-600 transition-colors">
 							{product.title}
 						</CardTitle>
 

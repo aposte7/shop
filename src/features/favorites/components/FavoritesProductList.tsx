@@ -1,13 +1,15 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { X, Home, MoveLeft } from 'lucide-react';
+import { MoveLeft } from 'lucide-react';
 import Link from 'next/link';
 import ProductCard from '@/features/products/components/ProductCard';
 import { useFavorites } from '../hooks/usefavorites';
+import { useRouter } from 'next/navigation';
 
 export default function FavoritesPage() {
-	const { favorites, remove } = useFavorites();
+	const { favorites } = useFavorites();
+	const router = useRouter();
 
 	if (favorites.length === 0) {
 		return (
@@ -27,6 +29,15 @@ export default function FavoritesPage() {
 
 	return (
 		<div className="max-w-7xl mx-auto p-8">
+			<Button
+				variant="ghost"
+				className="mb-4"
+				onClick={() => router.back()}
+			>
+				<MoveLeft className="w-4 h-4 mr-2" />
+				Back
+			</Button>
+
 			<h1 className="text-2xl font-bold mb-6">
 				Your Favorites ({favorites.length})
 			</h1>
