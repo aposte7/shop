@@ -15,7 +15,7 @@ function layout({ children }: { children: ReactNode }) {
 					type="text"
 				/>
 				<div className="flex gap-5">
-					<Link href="mychart">
+					<Link href="mycart">
 						<ShoppingCart />
 					</Link>
 					<Link href="favorites">

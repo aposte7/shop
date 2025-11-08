@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shop (Next.js) — simple setup
 
-## Getting Started
+A small Next.js + TypeScript e-commerce demo with Redux Toolkit (RTK Query) and shadcn-style UI.
 
-First, run the development server:
+## Quick start
 
 ```bash
+# clone and start dev server
+git clone https://github.com/aposte7/shop.git
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What this project provides
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+-   Product listing with infinite scroll
+-   Product detail (client component)
+-   Favorites (persisted in localStorage)
+-   RTK Query for data fetching
+-   Small UI primitives and a global toast provider
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Key files
 
-## Learn More
+-   `src/app/` — routes & layouts
+-   `src/features/products/` — API slice + product components
+-   `src/features/favorites/` — favorites slice & client UI
+-   `src/features/store.ts` — Redux store
 
-To learn more about Next.js, take a look at the following resources:
+## Favorites (client)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Favorites are stored in `localStorage` and managed by a Redux slice in `src/features/favorities/favoritiesSlice.ts`. The client UI and hooks live under `src/features/favorites` and are mounted inside the server page at `/favorites`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![Favorites grid](/screenshots/favorites-grid.png)
 
-## Deploy on Vercel
+## Product detail
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Product detail logic (RTK Query calls, local state for images, add-to-cart behavior) is implemented in a client component `src/features/products/components/ProductDetail.tsx`. The route page (`src/app/(site)/product/[productId]/page.tsx`) is a thin server component that simply renders the client component.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![Product detail](/screenshots/product-detail.png)
+
+![Reviews](/screenshots/reviews.png)
+
+## Products list
+
+The main product listing (infinite scroll) is implemented under `src/features/products`.
+
+![Products grid](/screenshots/products-grid.png)
