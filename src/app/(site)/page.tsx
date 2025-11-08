@@ -1,20 +1,9 @@
-import ProductCard from '@/features/products/components/ProductCard';
+import ProductList from '@/features/products/components/ProductList';
 
 export default function Page() {
 	return (
 		<main>
-			<section
-				className="px-26 py-10 gap-6 justify-between grid grid-cols-[repeat(auto-fit,minmax(270px,1fr))]
-"
-			>
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-			</section>
+			<ProductList />
 		</main>
 	);
 }
