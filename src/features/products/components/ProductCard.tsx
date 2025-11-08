@@ -28,9 +28,12 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 		: null;
 
 	return (
-		<Link href={`/product/${product.id}`} className="block group">
-			<div ref={isLast ? lastElRef : undefined}>
-				<Card className="transition-all duration-300 pt-0 hover:-translate-y-1 border-2 border-transparent hover:border-accent/20">
+		<div className="block group" ref={isLast ? lastElRef : undefined}>
+			<Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-accent/20">
+				<Link
+					href={`/products/${product.id}`}
+					className="block no-underline"
+				>
 					<div className="relative">
 						<Image
 							src={product.thumbnail}
@@ -103,48 +106,48 @@ function ProductCard({ product, isLast, lastElRef }: ProductCardProps) {
 							)}
 						</div>
 					</div>
+				</Link>
 
-					<CardFooter className="gap-2 px-4 py-3 mt-2">
-						<Button
-							className="flex-1 h-10"
-							disabled={product.stock === 0}
-							onClick={(e) => {
-								e.preventDefault();
-								e.stopPropagation();
+				<CardFooter className="gap-2 px-4 py-3 mt-2">
+					<Button
+						className="flex-1 h-10"
+						disabled={product.stock === 0}
+						onClick={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
 
-								toast.success(
-									`Successful added Product ${product.id}to cart`
-								);
-							}}
-						>
-							<ShoppingCart className="w-4 h-4 mr-1" />
-							Add To Cart
-						</Button>
+							toast.success(
+								`Product Successful added to your cart`
+							);
+						}}
+					>
+						<ShoppingCart className="w-4 h-4 mr-1" />
+						Add To Cart
+					</Button>
 
-						<Button
-							variant="outline"
-							size="icon"
+					<Button
+						variant="outline"
+						size="icon"
+						className={cn(
+							'h-10 w-10 transition-all',
+							isWishlisted && 'text-red-500 border-red-500'
+						)}
+						onClick={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+							setIsWishlisted(!isWishlisted);
+						}}
+					>
+						<Heart
 							className={cn(
-								'h-10 w-10 transition-all',
-								isWishlisted && 'text-red-500 border-red-500'
+								'w-4 h-4 transition-all',
+								isWishlisted && 'fill-current'
 							)}
-							onClick={(e) => {
-								e.preventDefault();
-								e.stopPropagation();
-								setIsWishlisted(!isWishlisted);
-							}}
-						>
-							<Heart
-								className={cn(
-									'w-4 h-4 transition-all',
-									isWishlisted && 'fill-current'
-								)}
-							/>
-						</Button>
-					</CardFooter>
-				</Card>
-			</div>
-		</Link>
+						/>
+					</Button>
+				</CardFooter>
+			</Card>
+		</div>
 	);
 }
 
