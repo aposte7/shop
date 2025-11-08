@@ -46,3 +46,13 @@ Product detail logic (RTK Query calls, local state for images, add-to-cart behav
 The main product listing (infinite scroll) is implemented under `src/features/products`.
 
 ![Products grid](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/products-grid.png)
+
+## Admin
+
+-   Admin area includes product management under `/admin/products` with add/edit/delete controls and a product table. See the short screenshots below for the admin product list and actions.
+
+![Admin products](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/admin-products.png)
+![Add product](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/add-product.png)
+![Delete product](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/delete-product.png)
+
+-   Note: `/admin/orders`, `/admin/users`, and `/admin/settings` currently show simple "coming soon" placeholders.
