@@ -1,58 +1,48 @@
-# Shop (Next.js) — simple setup
+# Shop (Next.js) — demo
 
-A small Next.js + TypeScript e-commerce demo with Redux Toolkit (RTK Query) and shadcn-style UI.
+A minimal Next.js + TypeScript e-commerce demo. Small, focused feature set to explore product listing, detail pages, favorites, and a tiny admin area.
 
-## Quick start
+Quick start
 
 ```bash
-# clone and start dev server
+# clone
 git clone https://github.com/aposte7/shop.git
+cd shop
 npm install
 npm run dev
 # open http://localhost:3000
 ```
 
-## What this project provides
+Key features
 
--   Product listing with infinite scroll
--   Product detail (client component)
--   Favorites (persisted in localStorage)
--   RTK Query for data fetching
--   Small UI primitives and a global toast provider
-
-## Key files
-
--   `src/app/` — routes & layouts
--   `src/features/products/` — API slice + product components
--   `src/features/favorites/` — favorites slice & client UI
--   `src/features/store.ts` — Redux store
-
-## Favorites (client)
-
-Favorites are stored in `localStorage` and managed by a Redux slice in `src/features/favorities/favoritiesSlice.ts`. The client UI and hooks live under `src/features/favorites` and are mounted inside the server page at `/favorites`.
-
-![Favorites grid](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/favorites-grid.png)
-
-## Product detail
-
-Product detail logic (RTK Query calls, local state for images, add-to-cart behavior) is implemented in a client component `src/features/products/components/ProductDetail.tsx`. The route page (`src/app/(site)/product/[productId]/page.tsx`) is a thin server component that simply renders the client component.
-
-![Product detail](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/product-detail.png)
-
-![Reviews](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/reviews.png)
-
-## Products list
-
-The main product listing (infinite scroll) is implemented under `src/features/products`.
-
-![Products grid](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/products-grid.png)
+-   Products list with infinite scroll and quick add-to-cart UI
+-   Product detail (client component) with images and reviews skeletons
+-   Favorites stored in localStorage and managed with Redux
+-   Admin area: product management table with add / edit / delete (demo)
+-   RTK Query for data fetching and a global toast provider
+-   Demo login: `demo@demo.com` / `demo123` (client-side demo auth)
+-   Admin product screenshots below show the product table and add/delete flows.
 
 ## Admin
 
 -   Admin area includes product management under `/admin/products` with add/edit/delete controls and a product table. See the short screenshots below for the admin product list and actions.
 
-![Admin products](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/admin-products.png)
-![Add product](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/add-product.png)
-![Delete product](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/delete-product.png)
+All screenshots
 
--   Note: `/admin/orders`, `/admin/users`, and `/admin/settings` currently show simple "coming soon" placeholders.
+Below are all screenshots included in the repository showing the app's available functionality:
+
+-   Products grid
+    ![Products grid](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/products-grid.png)
+-   Product detail
+    ![Product detail](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/product-detail.png)
+    ![Reviews](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/reviews.png)
+-   Favorites
+    ![Favorites grid](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/favorites-grid.png)
+-   Admin product list
+    ![Admin products](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/admin-products.png)
+-   Add product
+    ![Add product](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/add-product.png)
+-   Delete product
+    ![Delete product](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/delete-product.png)
+-   Login (demo)
+    ![Login](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/login.png)
