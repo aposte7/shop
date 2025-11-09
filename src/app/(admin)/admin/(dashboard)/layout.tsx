@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { Header } from './admin/_components/header';
-import Sidebar from './admin/_components/sidebar';
 import { cn } from '@/lib/utils';
+import Sidebar from './_components/sidebar';
+import { Header } from './_components/header';
 
 function Layout({ children }: { children: React.ReactNode }) {
 	return (
