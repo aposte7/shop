@@ -1,15 +1,19 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import {
 	Card,
-	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
+	CardContent,
+	CardFooter,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 
-export default function page() {
+export default function Page() {
 	return (
 		<div className="h-screen flex  items-center justify-center w-full bg-secondary/30">
 			<div className="flex min-w-80 w-[33%] flex-col justify-center gap-10">
@@ -25,40 +29,76 @@ export default function page() {
 							For demo purpose use <em>email</em> and{' '}
 							<em>password</em> in the placeholder
 						</CardDescription>
-						<div className="flex mt-4 flex-col gap-6">
+					</CardHeader>
+					<CardContent>
+						<form
+							onSubmit={handleSubmit(onSubmit)}
+							className="space-y-4"
+						>
 							<div className="space-y-2">
-								<Label id="email">
-									Email
-									<span className="text-red-400">*</span>
-								</Label>
-								<Input type="text" />
+								<Label htmlFor="email">Email</Label>
+								<Input
+									id="email"
+									type="email"
+									placeholder="you@example.com"
+									{...register('email')}
+								/>
+								{errors.email && (
+									<p className="text-sm text-red-600">
+										{errors.email.message}
+									</p>
+								)}
 							</div>
+
 							<div className="space-y-2">
-								<Label id="password">
-									Password
-									<span className="text-red-400">*</span>
-								</Label>
-								<Input />
+								<Label htmlFor="password">Password</Label>
+								<Input
+									id="password"
+									type="password"
+									placeholder="••••••••"
+									{...register('password')}
+								/>
+								{errors.password && (
+									<p className="text-sm text-red-600">
+										{errors.password.message}
+									</p>
+								)}
 							</div>
 
 							<div className="flex items-center justify-between">
-								<div className="flex gap-3 items-center">
-									<Input
-										className="w-4 h-4"
-										type="checkbox"
+								<div className="flex items-center space-x-2">
+									<Checkbox
+										id="rememberMe"
+										{...register('rememberMe')}
 									/>
-									<Label>Remember me</Label>
+									<Label
+										htmlFor="rememberMe"
+										className="text-sm font-normal"
+									>
+										Remember me
+									</Label>
 								</div>
-
 								<p className="text-sm cursor-pointer hover:text-blue-400 transition-colors font-medium text-slate-700">
 									Forgot password ?
 								</p>
 							</div>
-							<div>
-								<Button className="w-full"> Login</Button>
-							</div>
-						</div>
-					</CardHeader>
+
+							<Button type="submit" className="w-full">
+								Sign In
+							</Button>
+						</form>
+					</CardContent>
+					<CardFooter className="flex justify-center">
+						<p className="text-sm text-gray-600">
+							Don’t have an account?{' '}
+							<a
+								href="#"
+								className="text-blue-600 hover:underline"
+							>
+								Sign up
+							</a>
+						</p>
+					</CardFooter>
 				</Card>
 			</div>
 		</div>
