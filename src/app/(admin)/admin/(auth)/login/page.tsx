@@ -15,9 +15,12 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useAuth } from '@/features/auth/hooks/useAuth';
+import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const loginSchema = z.object({
-	email: z.email('Invalid email address.'),
+	name: z.string().min(3, 'user name is more than 3 letters'),
 	password: z.string().min(1, 'Password is required.'),
 	rememberMe: z.boolean(),
 });
@@ -33,14 +36,21 @@ export default function Page() {
 	} = useForm<LoginFormData>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: {
-			email: '',
+			name: '',
 			password: '',
 			rememberMe: false,
 		},
 	});
 
-	const onSubmit = (data: LoginFormData) => {
-		console.log('Form submitted:', data);
+	const { loginUser, isLoading } = useAuth();
+	const router = useRouter();
+
+	const onSubmit = async (data: LoginFormData) => {
+		try {
+			await loginUser({ username: data.name, password: data.password });
+			router.push('/admin/products');
+			reset();
+		} catch (err) {}
 	};
 
 	return (
@@ -65,16 +75,16 @@ export default function Page() {
 							className="space-y-4"
 						>
 							<div className="space-y-2">
-								<Label htmlFor="email">Email</Label>
+								<Label htmlFor="nam">Username</Label>
 								<Input
-									id="email"
-									type="email"
-									placeholder="you@example.com"
-									{...register('email')}
+									id="name"
+									type="nam"
+									placeholder="emilys"
+									{...register('name')}
 								/>
-								{errors.email && (
+								{errors.name && (
 									<p className="text-sm text-red-600">
-										{errors.email.message}
+										{errors.name.message}
 									</p>
 								)}
 							</div>
@@ -84,7 +94,7 @@ export default function Page() {
 								<Input
 									id="password"
 									type="password"
-									placeholder="••••••••"
+									placeholder="emilyspass"
 									{...register('password')}
 								/>
 								{errors.password && (
@@ -113,7 +123,14 @@ export default function Page() {
 							</div>
 
 							<Button type="submit" className="w-full">
-								Sign In
+								{isLoading ? (
+									<>
+										<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+										Signing In
+									</>
+								) : (
+									'Sign In'
+								)}
 							</Button>
 						</form>
 					</CardContent>
