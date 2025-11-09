@@ -12,8 +12,37 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+const loginSchema = z.object({
+	email: z.email('Invalid email address.'),
+	password: z.string().min(1, 'Password is required.'),
+	rememberMe: z.boolean(),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function Page() {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		reset,
+	} = useForm<LoginFormData>({
+		resolver: zodResolver(loginSchema),
+		defaultValues: {
+			email: '',
+			password: '',
+			rememberMe: false,
+		},
+	});
+
+	const onSubmit = (data: LoginFormData) => {
+		console.log('Form submitted:', data);
+	};
+
 	return (
 		<div className="h-screen flex  items-center justify-center w-full bg-secondary/30">
 			<div className="flex min-w-80 w-[33%] flex-col justify-center gap-10">
