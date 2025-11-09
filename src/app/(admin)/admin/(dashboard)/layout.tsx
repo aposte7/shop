@@ -3,8 +3,10 @@
 import { cn } from '@/lib/utils';
 import Sidebar from './_components/sidebar';
 import { Header } from './_components/header';
+import { useProtectedRoute } from '@/features/auth/hooks/useProtectedRoutes';
 
 function Layout({ children }: { children: React.ReactNode }) {
+	useProtectedRoute();
 	return (
 		<div className="flex h-screen bg-gray-50 ">
 			<Sidebar />
