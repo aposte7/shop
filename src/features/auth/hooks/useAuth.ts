@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoginMutation } from '../authApi';
 import { setCredentials } from '../authSlice';
 import { AppDispatch, RootState } from '@/features/store';
 import { User } from '../type';
 import { toast } from 'sonner';
+import { useState } from 'react';
 
 export const useAuth = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -11,37 +11,53 @@ export const useAuth = () => {
 	const { user, accessToken, isAuthenticated } = useSelector(
 		(state: RootState) => state.auth
 	);
-	const [login, { isLoading: isLoggingIn }] = useLoginMutation();
 
-	const loginUser = async (credentials: {
-		username: string;
-		password: string;
-	}) => {
+	const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+	const DEMO_EMAIL = 'demo@demo.com';
+	const DEMO_PASSWORD = 'demo123';
+
+	const loginUser = async (email: string, password: string) => {
+		setIsLoggingIn(true);
 		try {
-			const response = await login(credentials).unwrap();
-			const { accessToken, refreshToken, ...userData } = response;
+			if (email !== DEMO_EMAIL || password !== DEMO_PASSWORD) {
+				toast.error('Invalid demo credentials');
+				throw new Error('Invalid demo credentials');
+			}
 
-			const user: User = {
-				...userData,
-				role: userData.username === 'emilys' ? 'admin' : 'user',
+			await new Promise((res) => setTimeout(res, 250));
+
+			const username = || 'demo';
+			const dummyUser: User = {
+				id: 1,
+				username,
+				email,
+				firstName: 'Demo',
+				lastName: 'User',
+				gender: 'male',
+				image: "",
+				role: 'admin',
 			};
+
+			const demoToken = 'demo-token';
+			const demoRefresh = 'demo-refresh-token';
 
 			dispatch(
 				setCredentials({
-					user,
-					accessToken,
-					refreshToken,
+					user: dummyUser,
+					accessToken: demoToken,
+					refreshToken: demoRefresh,
 				})
 			);
 
-			toast.success('Successfully Logged In');
+			toast.success('Successfully Logged In (demo)');
 
-			return { user, accessToken, refreshToken };
+			return { user: dummyUser, accessToken: demoToken };
 		} catch (error) {
-			console.error('Login failed:', error);
-			toast.error('Invalid credential. Please try correctly again ');
-
+			console.error('Login failed (demo):', error);
 			throw error;
+		} finally {
+			setIsLoggingIn(false);
 		}
 	};
 
