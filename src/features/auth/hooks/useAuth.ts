@@ -27,7 +27,7 @@ export const useAuth = () => {
 
 			await new Promise((res) => setTimeout(res, 250));
 
-			const username = || 'demo';
+			const username = 'demo';
 			const dummyUser: User = {
 				id: 1,
 				username,
@@ -35,7 +35,7 @@ export const useAuth = () => {
 				firstName: 'Demo',
 				lastName: 'User',
 				gender: 'male',
-				image: "",
+				image: '',
 				role: 'admin',
 			};
 
