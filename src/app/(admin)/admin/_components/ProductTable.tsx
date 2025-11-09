@@ -22,15 +22,25 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useGetProductsQuery } from '@/features/products/productsApi';
 import DeleteButton from './DeleteProduct';
+import ProductTableSkeleton from './ProductTableSkeleton';
+import ProductTableError from './ProductTableError';
 
 export default function ProductTable() {
 	const router = useRouter();
-	const { data, refetch } = useGetProductsQuery(
+	const { data, isLoading, isError, refetch } = useGetProductsQuery(
 		{ limit: 100, skip: 0 },
 		{ refetchOnMountOrArgChange: true }
 	);
 
 	const products = useMemo(() => data?.products ?? [], [data?.products]);
+
+	if (isLoading) {
+		return <ProductTableSkeleton />;
+	}
+
+	if (isError) {
+		return <ProductTableError onRetry={refetch} />;
+	}
 	return (
 		<div className="overflow-x-auto">
 			<Table>
