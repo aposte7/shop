@@ -20,7 +20,7 @@ import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 const loginSchema = z.object({
-	name: z.string().min(3, 'user name is more than 3 letters'),
+	email: z.email('A valid email is required'),
 	password: z.string().min(1, 'Password is required.'),
 	rememberMe: z.boolean(),
 });
@@ -36,7 +36,7 @@ export default function Page() {
 	} = useForm<LoginFormData>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: {
-			name: '',
+			email: '',
 			password: '',
 			rememberMe: false,
 		},
@@ -47,10 +47,12 @@ export default function Page() {
 
 	const onSubmit = async (data: LoginFormData) => {
 		try {
-			await loginUser({ username: data.name, password: data.password });
+			await loginUser(data.email, data.password);
 			router.push('/admin/products');
 			reset();
-		} catch (err) {}
+		} catch (err) {
+			console.error(err);
+		}
 	};
 
 	return (
@@ -75,16 +77,16 @@ export default function Page() {
 							className="space-y-4"
 						>
 							<div className="space-y-2">
-								<Label htmlFor="nam">Username</Label>
+								<Label htmlFor="email">Email</Label>
 								<Input
-									id="name"
-									type="nam"
-									placeholder="emilys"
-									{...register('name')}
+									id="email"
+									type="email"
+									placeholder="demo@demo.com"
+									{...register('email')}
 								/>
-								{errors.name && (
+								{errors.email && (
 									<p className="text-sm text-red-600">
-										{errors.name.message}
+										{errors.email.message}
 									</p>
 								)}
 							</div>
@@ -94,7 +96,7 @@ export default function Page() {
 								<Input
 									id="password"
 									type="password"
-									placeholder="emilyspass"
+									placeholder="demo123"
 									{...register('password')}
 								/>
 								{errors.password && (
