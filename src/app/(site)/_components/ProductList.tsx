@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useGetProductsQuery } from '../productsApi';
-import ProductCard from '../../../app/(site)/_components/ProductCard';
+import { useGetProductsQuery } from '../../../features/products/productsApi';
+import ProductCard from './ProductCard';
 import ProductSpinner from './ProductSpinner';
 import {
 	Card,

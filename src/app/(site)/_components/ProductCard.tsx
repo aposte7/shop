@@ -3,7 +3,7 @@ import { Card, CardFooter, CardTitle } from '@/components/ui/card';
 import { Heart, ShoppingCart } from 'lucide-react';
 import Stars from '@/components/Stars';
 import Image from 'next/image';
-import { Product } from '../types';
+import { Product } from '../../../features/products/types';
 import { RefObject } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';

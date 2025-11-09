@@ -1,4 +1,4 @@
-import ProductList from '@/features/products/components/ProductList';
+import ProductList from '@/app/(site)/_components/ProductList';
 
 export default function Page() {
 	return (

@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { MoveLeft } from 'lucide-react';
 import Link from 'next/link';
-import ProductCard from '@/features/products/components/ProductCard';
+import ProductCard from '@/app/(site)/_components/ProductCard';
 import { useFavorites } from '../hooks/usefavorites';
 import { useRouter } from 'next/navigation';
 

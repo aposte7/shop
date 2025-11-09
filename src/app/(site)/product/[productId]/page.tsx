@@ -1,4 +1,4 @@
-import ProductDetail from '@/features/products/components/ProductDetail';
+import ProductDetail from '@/app/(site)/_components/ProductDetail';
 
 export default async function page({
 	params,
