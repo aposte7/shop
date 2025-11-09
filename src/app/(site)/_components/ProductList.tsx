@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 const PAGE_SIZE = 10;
 
 export default function ProductList() {
-	const [skip, setSkip] = useState(0);
+	const [skip, setSkip] = useState(10);
 
 	const { data, isLoading, isFetching, isError, refetch } =
 		useGetProductsQuery({
@@ -48,7 +48,7 @@ export default function ProductList() {
 
 	if (isError)
 		return (
-			<section className="px-26 py-10">
+			<section className="xl:px-26 md:px-15 px-6  py-10">
 				<div className="max-w-md mx-auto">
 					<Card className="border-destructive/30 bg-destructive/5 text-destructive-700">
 						<div className="flex items-start gap-4">
@@ -99,7 +99,7 @@ export default function ProductList() {
 	const products = data?.products ?? [];
 
 	return (
-		<section className="px-26 py-10  ">
+		<section className="xl:px-26 md:px-15 px-10 py-10  ">
 			<h1 className="text-3xl font-bold mb-6">Products</h1>
 
 			{isLoading && <ProductSpinner />}
