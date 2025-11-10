@@ -43,7 +43,7 @@ export default function Header() {
 							asChild
 						>
 							<Link href="/favorites">
-								<Heart className="h-6  w-5" />
+								<Heart className="size-6" />
 							</Link>
 						</Button>
 
@@ -54,7 +54,7 @@ export default function Header() {
 							asChild
 						>
 							<Link href="/mycart">
-								<ShoppingCart className="h-6 w-6" />
+								<ShoppingCart className="size-6" />
 							</Link>
 						</Button>
 					</div>
@@ -65,7 +65,7 @@ export default function Header() {
 				className={cn(
 					'md:hidden bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 absolute w-full border-b  px-4 py-3 transition-all  duration-400 ease-in-out ',
 					showSearch
-						? 'opacity-100 top-full'
+						? 'opacity-100  top-full'
 						: 'opacity-0 top-0 -z-10 '
 				)}
 			>
