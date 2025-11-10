@@ -1,10 +1,5 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import {
-	useGetCategoriesQuery,
-	useGetProductsQuery,
-} from '../../../features/products/productsApi';
 import ProductCard from './ProductCard';
 import ProductSpinner from './ProductSpinner';
 import {
@@ -16,65 +11,23 @@ import {
 	CardHeader,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronRight, Menu, XCircle } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
-import { useSearchParams, useRouter } from 'next/navigation';
-
-const PAGE_SIZE = 10;
+import { useProductList } from '@/features/products/hooks/useProductList';
 
 export default function ProductList() {
-	const [skip, setSkip] = useState(0);
-	const router = useRouter();
-	const searchParams = useSearchParams();
-	const selectedSlug = searchParams.get('category') ?? 'all';
 	const {
-		data: apiCategories = [],
-		isLoading: catsLoading,
-		isError: catsError,
-	} = useGetCategoriesQuery();
-
-	const { data, isLoading, isFetching, isError, refetch } =
-		useGetProductsQuery({
-			limit: PAGE_SIZE,
-			skip,
-			categorySlug: selectedSlug === 'all' ? undefined : selectedSlug,
-		});
-
-	const observer = useRef<IntersectionObserver | null>(null);
-	const lastElRef = useRef<HTMLDivElement>(null);
-
-	const products = data?.products ?? [];
-	const hasMore = data && skip + PAGE_SIZE < data.total;
-
-	useEffect(() => {
-		if (!hasMore || isFetching) return;
-
-		if (observer.current) observer.current.disconnect();
-
-		observer.current = new IntersectionObserver((entries) => {
-			if (entries[0].isIntersecting) {
-				setSkip((prev) => prev + PAGE_SIZE);
-			}
-		});
-
-		if (lastElRef.current) observer.current.observe(lastElRef.current);
-
-		return () => observer.current?.disconnect();
-	}, [hasMore, isFetching]);
-
-	const setCategory = (slug: string) => {
-		const newParams = new URLSearchParams(searchParams);
-		if (slug === 'all') newParams.delete('category');
-		else newParams.set('category', slug);
-		router.replace(`?${newParams.toString()}`);
-		setSkip(0);
-	};
-
-	const categories = apiCategories.map((c) => ({
-		slug: c.slug,
-		name: c.name ?? c.slug.charAt(0).toUpperCase() + c.slug.slice(1),
-	}));
+		products,
+		categories,
+		selectedSlug,
+		setCategory,
+		isLoading,
+		isFetching,
+		isError,
+		refetch,
+		lastElRef,
+	} = useProductList();
 
 	if (isError)
 		return (
@@ -130,7 +83,7 @@ export default function ProductList() {
 
 	return (
 		<section className="xl:px-26 md:px-15 px-10 py-10">
-			<div className="mb-15 mt-10 space-y-4 relative">
+			<div className="mb-15 space-y-4 relative">
 				<h1 className="text-3xl font-bold">Products</h1>
 
 				<div className="relative flex justify-end items-center">
