@@ -12,7 +12,7 @@ export default function Header() {
 	return (
 		<header className="sticky h-fit top-0 z-50 w-full  ">
 			<div className="border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-				<div className="container mx-auto flex h-16 items-center justify-between">
+				<div className="xl:px-30 md:px-15 px-10 flex h-16 items-center justify-between">
 					<Link
 						href="/"
 						className="flex items-center space-x-2 text-[26px] font-bold tracking-tight transition-colors hover:text-primary"
