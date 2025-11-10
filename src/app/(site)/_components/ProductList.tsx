@@ -9,13 +9,34 @@ import {
 	CardFooter,
 	CardTitle,
 	CardDescription,
+	CardContent,
+	CardHeader,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { XCircle } from 'lucide-react';
+import { Menu, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 const PAGE_SIZE = 10;
 
+const categories = [
+	'Mobiles',
+	'Laptops',
+	'Tablets',
+	'Headphones',
+	'Smartwatches',
+	'Cameras',
+	'Speakers',
+	'TVs',
+	'Gaming',
+	'Accessories',
+	'Printers',
+	'Monitors',
+	'Storage',
+	'Networking',
+	'Software',
+];
 export default function ProductList() {
 	const [skip, setSkip] = useState(10);
 
@@ -83,7 +104,7 @@ export default function ProductList() {
 										} else {
 											toast.success('Products refreshed');
 										}
-									} catch (err) {
+									} catch {
 										toast.error('Failed to fetch products');
 									}
 								}}
@@ -100,7 +121,67 @@ export default function ProductList() {
 
 	return (
 		<section className="xl:px-26 md:px-15 px-10 py-10  ">
-			<h1 className="text-3xl font-bold mb-6">Products</h1>
+			<div className="mb-10 space-y-4 relative">
+				<h1 className="text-2xl font-bold">Products</h1>
+
+				<div className="relative flex justify-end items-center">
+					<Button
+						variant="ghost"
+						className={cn(
+							'peer flex items-center gap-2 rounded-none border-b-2 border-transparent',
+							'hover:border-primary hover:bg-accent/50 transition-all duration-200',
+							'font-medium text-foreground'
+						)}
+					>
+						<Menu className="h-5 w-5" />
+						All Categories
+					</Button>
+
+					<Card
+						className={cn(
+							'absolute right-0 top-[calc(100%-7px)] mt-2  w-full',
+							'invisible opacity-0 scale-95 -translate-y-2',
+							'peer-hover:visible peer-hover:opacity-100 peer-hover:scale-100 peer-hover:translate-y-0',
+							'hover:visible hover:opacity-100 hover:scale-100 hover:translate-y-0',
+							'transition-all duration-300 ease-out',
+							'z-50 shadow-xl border bg-background/95 backdrop-blur-sm',
+							'max-h-[60dvh] overflow-y-auto',
+							'origin-top-right'
+						)}
+					>
+						<CardHeader className="sticky top-0 bg-background/80 backdrop-blur-sm block z-10">
+							<CardTitle className="text-lg font-semibold ">
+								Categories
+							</CardTitle>
+						</CardHeader>
+
+						<CardContent className="">
+							<div className="flex flex-wrap gap-3">
+								{categories.map((category) => (
+									<button
+										key={category}
+										className={cn(
+											'text-left group px-3 py-2 rounded-lg text-sm font-medium',
+											'bg-muted/50 hover:bg-primary hover:text-primary-foreground',
+											'transition-all duration-200',
+											'border border-transparent hover:border-primary/20'
+										)}
+									>
+										<Link
+											href={`?${category}`}
+											className="flex items-center gap-2"
+										>
+											<div className="h-2 group-hover:bg-primary-foreground transition-colors duration-200 w-2 rounded-full bg-primary/60" />
+
+											{category}
+										</Link>
+									</button>
+								))}
+							</div>
+						</CardContent>
+					</Card>
+				</div>
+			</div>
 
 			{isLoading && <ProductSpinner />}
 
