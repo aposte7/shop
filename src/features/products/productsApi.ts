@@ -1,30 +1,42 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Product, ProductsResponse } from './types';
+import type { Category, Product, ProductsResponse } from './types';
 
 interface GetProductsArgs {
 	limit?: number;
 	skip?: number;
+	categorySlug?: string;
 }
 
 export const productsApi = createApi({
 	reducerPath: 'productsApi',
 	baseQuery: fetchBaseQuery({ baseUrl: 'https://dummyjson.com' }),
-	tagTypes: ['Products', 'Product'],
+	tagTypes: ['Products', 'Categories', 'Product'],
 	endpoints: (builder) => ({
-		getProducts: builder.query<ProductsResponse, GetProductsArgs>({
-			query: ({ limit = 10, skip = 0 }) =>
-				`/products?limit=${limit}&skip=${skip}`,
+		getCategories: builder.query<Category[], void>({
+			query: () => '/products/categories',
+			providesTags: ['Categories'],
+		}),
 
-			serializeQueryArgs: ({ endpointName }) => endpointName,
+		getProducts: builder.query<ProductsResponse, GetProductsArgs>({
+			query: ({ limit = 10, skip = 0, categorySlug }) => {
+				const base = categorySlug
+					? `/products/category/${categorySlug}`
+					: '/products';
+				return `${base}?limit=${limit}&skip=${skip}`;
+			},
+
+			serializeQueryArgs: ({ endpointName, queryArgs }) =>
+				`${endpointName}${
+					queryArgs.categorySlug ? `-${queryArgs.categorySlug}` : ''
+				}`,
 
 			merge: (currentCache, newPage) => {
-				const existingIds = new Set(
+				const existing = new Set(
 					currentCache.products.map((p) => p.id)
 				);
 				const filtered = newPage.products.filter(
-					(p) => !existingIds.has(p.id)
+					(p) => !existing.has(p.id)
 				);
-
 				currentCache.products.push(...filtered);
 				currentCache.total = newPage.total;
 				currentCache.skip = newPage.skip;
@@ -34,6 +46,14 @@ export const productsApi = createApi({
 			forceRefetch({ currentArg, previousArg }) {
 				return currentArg?.skip !== previousArg?.skip;
 			},
+
+			providesTags: (result, _error, { categorySlug }) => [
+				'Products' as const,
+				{ type: 'Product' as const, id: 'LIST' },
+				...(categorySlug
+					? [{ type: 'Categories' as const, id: categorySlug }]
+					: []),
+			],
 		}),
 
 		getProductById: builder.query<Product, number>({
@@ -83,4 +103,5 @@ export const {
 	useCreateProductMutation,
 	useUpdateProductMutation,
 	useDeleteProductMutation,
+	useGetCategoriesQuery,
 } = productsApi;
