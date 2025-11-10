@@ -13,6 +13,7 @@ export function useProductList() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const selectedSlug = searchParams.get('category') ?? 'all';
+	const searchQuery = searchParams.get('search') ?? undefined;
 
 	const [skip, setSkip] = useState(0);
 
@@ -27,6 +28,7 @@ export function useProductList() {
 			limit: PAGE_SIZE,
 			skip,
 			categorySlug: selectedSlug === 'all' ? undefined : selectedSlug,
+			searchQuery: searchQuery,
 		});
 
 	const products = data?.products ?? [];
@@ -49,6 +51,7 @@ export function useProductList() {
 
 	const setCategory = (slug: string) => {
 		const newParams = new URLSearchParams(searchParams);
+		newParams.delete('search');
 		if (slug === 'all') newParams.delete('category');
 		else newParams.set('category', slug);
 		router.replace(`?${newParams.toString()}`);

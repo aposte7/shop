@@ -5,12 +5,13 @@ interface GetProductsArgs {
 	limit?: number;
 	skip?: number;
 	categorySlug?: string;
+	searchQuery?: string;
 }
 
 export const productsApi = createApi({
 	reducerPath: 'productsApi',
 	baseQuery: fetchBaseQuery({ baseUrl: 'https://dummyjson.com' }),
-	tagTypes: ['Products', 'Categories', 'Product'],
+	tagTypes: ['Products', 'Categories', 'Product', 'Search'],
 	endpoints: (builder) => ({
 		getCategories: builder.query<Category[], void>({
 			query: () => '/products/categories',
@@ -18,17 +19,35 @@ export const productsApi = createApi({
 		}),
 
 		getProducts: builder.query<ProductsResponse, GetProductsArgs>({
-			query: ({ limit = 10, skip = 0, categorySlug }) => {
-				const base = categorySlug
-					? `/products/category/${categorySlug}`
-					: '/products';
-				return `${base}?limit=${limit}&skip=${skip}`;
+			query: ({ limit = 10, skip = 0, categorySlug, searchQuery }) => {
+				let url: string;
+
+				if (searchQuery) {
+					url = `/products/search?q=${encodeURIComponent(
+						searchQuery
+					)}`;
+				} else if (categorySlug) {
+					url = `/products/category/${categorySlug}`;
+				} else {
+					url = '/products';
+				}
+
+				const params = new URLSearchParams();
+				params.append('limit', limit.toString());
+				if (skip > 0) params.append('skip', skip.toString());
+
+				if (searchQuery) {
+					return `${url}&${params.toString()}`;
+				}
+				return `${url}?${params.toString()}`;
 			},
 
-			serializeQueryArgs: ({ endpointName, queryArgs }) =>
-				`${endpointName}${
-					queryArgs.categorySlug ? `-${queryArgs.categorySlug}` : ''
-				}`,
+			serializeQueryArgs: ({ endpointName, queryArgs }) => {
+				const { categorySlug, searchQuery } = queryArgs;
+				return `${endpointName}${
+					categorySlug ? `-cat-${categorySlug}` : ''
+				}${searchQuery ? `-search-${searchQuery}` : ''}`;
+			},
 
 			merge: (currentCache, newPage) => {
 				const existing = new Set(
@@ -47,13 +66,30 @@ export const productsApi = createApi({
 				return currentArg?.skip !== previousArg?.skip;
 			},
 
-			providesTags: (result, _error, { categorySlug }) => [
-				'Products' as const,
-				{ type: 'Product' as const, id: 'LIST' },
-				...(categorySlug
-					? [{ type: 'Categories' as const, id: categorySlug }]
-					: []),
-			],
+			providesTags: (result, _error, { categorySlug, searchQuery }) => {
+				type Tag =
+					| { type: 'Products'; id?: string | number }
+					| { type: 'Categories'; id?: string | number }
+					| { type: 'Product'; id?: string | number }
+					| { type: 'Search'; id?: string | number };
+
+				const tags: Tag[] = [
+					{ type: 'Products' as const },
+					{ type: 'Product' as const, id: 'LIST' },
+				];
+
+				if (categorySlug) {
+					tags.push({
+						type: 'Categories' as const,
+						id: categorySlug,
+					});
+				}
+				if (searchQuery) {
+					tags.push({ type: 'Search' as const, id: searchQuery });
+				}
+
+				return tags;
+			},
 		}),
 
 		getProductById: builder.query<Product, number>({
