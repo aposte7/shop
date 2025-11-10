@@ -78,14 +78,10 @@ export default function ProductList() {
 
 	if (isError)
 		return (
-			<section className="xl:px-26 md:px-15 px-6  py-10">
-				<div className="max-w-md mx-auto">
+			<section className="xl:px-26  md:px-15 px-6  py-10">
+				<div className="max-w-md h-[calc(100dvh-15rem)] flex items-center justify-center mx-auto">
 					<Card className="border-destructive/30 bg-destructive/5 text-destructive-700">
-						<div className="flex items-start gap-4">
-							<XCircle
-								className="text-destructive-600"
-								size={28}
-							/>
+						<div className="flex px-6 items-start gap-4">
 							<div>
 								<CardTitle className="text-lg">
 									Failed to load products
@@ -100,6 +96,7 @@ export default function ProductList() {
 						<CardFooter className="mt-4 justify-end">
 							<Button
 								variant="ghost"
+								className="cursor-pointer bg-primary hover:text-primary-foreground hover:bg-primary/80 text-primary-foreground transition-colors duration-300"
 								onClick={async () => {
 									try {
 										const res = await refetch();
@@ -133,15 +130,15 @@ export default function ProductList() {
 
 	return (
 		<section className="xl:px-26 md:px-15 px-10 py-10">
-			<div className="mb-10 space-y-4 relative">
-				<h1 className="text-2xl font-bold">Products</h1>
+			<div className="mb-15 mt-10 space-y-4 relative">
+				<h1 className="text-3xl font-bold">Products</h1>
 
 				<div className="relative flex justify-end items-center">
 					<Button
 						variant="ghost"
 						className={cn(
 							'peer group flex items-center gap-3 rounded-none border-b-2 border-transparent',
-							'hover:border-primary hover:bg-accent/50 transition-all duration-200',
+							'border-primary hover:bg-accent/50 transition-all duration-200',
 							'font-medium text-foreground'
 						)}
 					>
