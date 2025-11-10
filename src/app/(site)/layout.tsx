@@ -14,7 +14,7 @@ function layout({ children }: { children: ReactNode }) {
 			>
 				<Header />
 			</Suspense>
-			<main className=" mt-7 xl:px-26 md:px-15 px-10 py-10">
+			<main className=" mt-7 xl:px-30 md:px-15 px-10 py-10">
 				{children}
 			</main>
 		</>
