@@ -5,9 +5,5 @@ export const metadata = {
 };
 
 export default function FavoritesPage() {
-	return (
-		<main>
-			<FavoritesProductList />
-		</main>
-	);
+	return <FavoritesProductList />;
 }

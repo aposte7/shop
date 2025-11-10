@@ -31,7 +31,7 @@ export default function ProductList() {
 
 	if (isError)
 		return (
-			<section className="xl:px-26  md:px-15 px-6  py-10">
+			<section>
 				<div className="max-w-md h-[calc(100dvh-15rem)] flex items-center justify-center mx-auto">
 					<Card className="border-destructive/30 bg-destructive/5 text-destructive-700">
 						<div className="flex px-6 items-start gap-4">
@@ -82,7 +82,7 @@ export default function ProductList() {
 			  'Category';
 
 	return (
-		<section className="xl:px-26 md:px-15 px-10 py-10">
+		<section>
 			<div className="mb-15 space-y-4 relative">
 				<h1 className="text-3xl font-bold">Products</h1>
 
