@@ -1,6 +1,6 @@
-# Shop (Next.js) — demo
+# Shop (Next.js) — Demo
 
-A minimal Next.js + TypeScript e-commerce demo. Small, focused feature set to explore product listing, detail pages, favorites, and a tiny admin area.
+A compact demo e-commerce app built with Next.js (App Router), React and TypeScript. It's intended as a reference project demonstrating product listing, detail pages, local favorites, and a tiny admin area.
 
 Quick start
 
@@ -13,36 +13,38 @@ npm run dev
 # open http://localhost:3000
 ```
 
-Key features
+What’s notable features
 
--   Products list with infinite scroll and quick add-to-cart UI
--   Product detail (client component) with images and reviews skeletons
--   Favorites stored in localStorage and managed with Redux
--   Admin area: product management table with add / edit / delete (demo)
--   RTK Query for data fetching and a global toast provider
--   Demo login: `demo@demo.com` / `demo123` (client-side demo auth)
--   Admin product screenshots below show the product table and add/delete flows.
+-   Search: live search input in the header
+-   Category filters: category chips in the product list .
+-   Favorites: quick add/remove favorites stored in localStorage and synced to Redux.
+-   Admin demo: a basic admin area with product add/edit/delete flows..
+-   RTK Query: products and categories use RTK Query with pagination and merged results for infinite scroll.
+-   Demo login is available for the admin.
+-   Sonner for notification
+-   Show Error and Loading state
 
-## Admin
+Screenshots
 
--   Admin area includes product management under `/admin/products` with add/edit/delete controls and a product table. See the short screenshots below for the admin product list and actions.
-
-All screenshots
-
-Below are all screenshots included in the repository showing the app's available functionality:
+The repo includes screenshots under `public/screenshots`. Below are all available screenshots in the repository:
 
 -   Products grid
-    ![Products grid](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/products-grid.png)
+    ![Products grid](/screenshots/products-grid.png)
 -   Product detail
-    ![Product detail](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/product-detail.png)
-    ![Reviews](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/reviews.png)
+    ![Product detail](/screenshots/product-detail.png)
+-   Reviews view
+    ![Reviews](/screenshots/reviews.png)
 -   Favorites
-    ![Favorites grid](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/favorites-grid.png)
+    ![Favorites grid](/screenshots/favorites-grid.png)
 -   Admin product list
-    ![Admin products](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/admin-products.png)
--   Add product
-    ![Add product](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/add-product.png)
--   Delete product
-    ![Delete product](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/delete-product.png)
+    ![Admin products](/screenshots/admin-products.png)
+-   Add product (admin)
+    ![Add product](/screenshots/add-product.png)
+-   Delete product (admin)
+    ![Delete product](/screenshots/delete-product.png)
 -   Login (demo)
-    ![Login](https://raw.githubusercontent.com/aposte7/shop/main/public/screenshots/login.png)
+    ![Login](/screenshots/login.png)
+-   Category filter in action
+    ![Category filter](/screenshots/category-filter.png)
+-   Search (header) example
+    ![Search input](/screenshots/search-product.png)
