@@ -15,7 +15,7 @@ export default function Header() {
 				<div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
 					<Link
 						href="/"
-						className="flex items-center space-x-2 text-2xl font-bold tracking-tight transition-colors hover:text-primary"
+						className="flex items-center space-x-2 text-[26px] font-bold tracking-tight transition-colors hover:text-primary"
 					>
 						<span className="bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">
 							ShopKoo
@@ -43,7 +43,7 @@ export default function Header() {
 							asChild
 						>
 							<Link href="/favorites">
-								<Heart className="size-6" />
+								<Heart className="size-5" />
 							</Link>
 						</Button>
 
@@ -54,7 +54,7 @@ export default function Header() {
 							asChild
 						>
 							<Link href="/mycart">
-								<ShoppingCart className="size-6" />
+								<ShoppingCart className="size-5" />
 							</Link>
 						</Button>
 					</div>
